@@ -1,5 +1,5 @@
 var React = require('react');
-var url = 'http://0.0.0.0:3000/comment';
+// var url = 'http://0.0.0.0:3000/comment';
 
 var commentBox = React.createClass({
   getInitialState: function() {
@@ -21,7 +21,7 @@ var commentBox = React.createClass({
     event.preventDefault();
     $.ajax({
       type: 'POST',
-      url: url,
+      url: 'comment',
       contentType: 'application/json',
       data: JSON.stringify({
         "comment": this.state.comment,
@@ -41,7 +41,7 @@ var commentBox = React.createClass({
       event.preventDefault();
       $.ajax({ // Post comment
         type: 'POST',
-        url: url,
+        url: 'comment',
         contentType: 'application/json',
         data: JSON.stringify({
           "comment": this.state.comment,

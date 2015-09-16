@@ -16,14 +16,14 @@
   <script>
   $(function(){
 
-    var url = 'http://0.0.0.0:3000/'
+    // var url = 'http://0.0.0.0:3000/';
     $('.submitButton').on('click', function(event){
       event.preventDefault();
 
       var inviteCode = $('.inviteBox').val();
       $.ajax({
         type: 'POST',
-        url: url + 'noToken' ,
+        url: 'noToken' ,
         contentType: 'application/json',
         data: JSON.stringify({
           "inviteCode": inviteCode,

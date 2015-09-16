@@ -1,6 +1,6 @@
 var Firebase = require('firebase');
-var myDataRef = new Firebase('https://fiery-heat-3376.firebaseio.com/');
-var tokenFactory = require('./firebaseTokenFactory').tokenFactory
+var myDataRef = new Firebase('https://bigdicks.firebaseio.com/');
+var tokenFactory = require('./firebaseTokenFactory').tokenFactory;
 var Cookies = require('cookies');
 
 var freshPost = myDataRef.child('Fresh Post');
@@ -45,7 +45,7 @@ var insertPost = exports.insertPost = function(request, response, dataRef){
           comments : "no comments"
         });
         
-        var fbRef = dataRef.parent()
+        var fbRef = dataRef.parent();
         var postIdRef = fbRef.child('sessions/' + authData.auth.uid + '/posted/' + postId);
         
         postIdRef.set({ type: 'true' });
