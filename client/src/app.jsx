@@ -37,12 +37,14 @@ var mainView = React.createClass({
   componentWillMount: function(){
     if(token){
       var context = this;
-      this.firebaseRef = new Firebase('https://fiery-heat-3376.firebaseio.com/');
+      this.firebaseRef = new Firebase('https://bigdicks.firebaseio.com/');
       this.firebaseRef.authWithCustomToken(token, function(error, authData){
         if(error){
-          console.log('Problem connecting to Database')
+          console.log('Problem connecting to Database');
+          console.log(error);
         } else{
           console.log('Connected to Databse')
+          console.log(authData);
           context.setState({
             token: authData.token,
             auth: authData.auth,

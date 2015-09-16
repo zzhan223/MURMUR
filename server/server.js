@@ -5,20 +5,24 @@ var app = express();
 var bodyParser = require('body-parser');
 var Cookies = require("cookies");
 var serverUrl = '0.0.0.0';
-var fs = require('fs')
+var fs = require('fs');
 
-app.use('/murmur', express.static('../client'));
+app.use('/murmur', express.static('client'));
 app.use(bodyParser.json());
 
-app.use(Cookies.express())
+app.use(Cookies.express());
+
+app.post('/')
 
 app.get('/noToken', function(request, response){
-  fs.readFile('../client/src/invite.html', function(err, data){
+  fs.readFile('client/src/invite.html', function(err, data){
     if(err){
-      console.log('error reading invite.html')
+      console.log('error reading invite.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
     }
-    response.setHeader('Content-Type', 'text/html')
-    response.send(data)
   })
 })
 
@@ -50,22 +54,23 @@ app.get('/', function(request, response){
 })
 
 app.post('/', function(request, response){ //request.body.url = 'newPost'
+  console.log('got /');
   firebase.insertPost(request, response);
 })
 
-app.post('/comment', function(request, response){ //request.body.url = 'newPost'
+app.post('/murmur/comment', function(request, response){ //request.body.url = 'newPost'
   firebase.comment(request, response);
 })
 
-app.post('/vote', function(request,response){ //request.body.url = 'newPost'
+app.post('/murmur/vote', function(request,response){ //request.body.url = 'newPost'
   firebase.votePost(request, response);
 })
 
-app.post('/voteComment', function(request,response){ //request.body.url = 'newPost'
+app.post('/murmur/voteComment', function(request,response){ //request.body.url = 'newPost'
   firebase.voteComment(request, response);
 })
 
-app.post('/favorite', function(request,response){ //request.body.url = 'newPost'
+app.post('/murmur/favorite', function(request,response){ //request.body.url = 'newPost'
   firebase.toggleFavorite(request, response);
 })
 

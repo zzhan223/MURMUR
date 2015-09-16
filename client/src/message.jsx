@@ -3,7 +3,7 @@ var moment = require('moment');
 var CommentBox = require('./commentBox');
 var CommentMessage = require('./commentMessage');
 
-var url = 'http://0.0.0.0:3000/';
+// var url = 'http://0.0.0.0:3000/';
 
 var Message = React.createClass({
 
@@ -22,7 +22,7 @@ var Message = React.createClass({
     var messageId = $(event.target).closest('.jumbotron').attr('id');
     $.ajax({
       type: 'POST',
-      url: url + 'vote' ,
+      url: 'vote' ,
       contentType: 'application/json',
       data: JSON.stringify({
         "messageId": messageId,
@@ -40,7 +40,7 @@ var Message = React.createClass({
     var messageId = $(event.target).closest('.jumbotron').attr('id');
     $.ajax({
       type: 'POST',
-      url: url + 'vote' ,
+      url: 'vote' ,
       contentType: 'application/json',
       data: JSON.stringify({
         "messageId": messageId,
@@ -57,7 +57,7 @@ var Message = React.createClass({
     var messageId = $(event.target).closest('.jumbotron').attr('id');
     $.ajax({
       type: 'POST',
-      url: url + 'favorite' ,
+      url: 'favorite' ,
       contentType: 'application/json',
       data: JSON.stringify({
         "messageId": messageId,
