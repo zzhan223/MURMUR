@@ -1,4 +1,5 @@
 var React = require('react');
+
 var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
 var InputBox = require('./inputbox');
@@ -37,7 +38,7 @@ var mainView = React.createClass({
   componentWillMount: function(){
     if(token){
       var context = this;
-      this.firebaseRef = new Firebase('https://bigdicks.firebaseio.com/');
+      this.firebaseRef = new Firebase('https://donkey.firebaseio.com/');
       this.firebaseRef.authWithCustomToken(token, function(error, authData){
         if(error){
           console.log('Problem connecting to Database');

@@ -1,5 +1,5 @@
 var FirebaseTokenGenerator = require("firebase-token-generator");
-var tokenGenerator = new FirebaseTokenGenerator('2KVu4X7kLr3fhLzw3Ew0nFkSTdOhlKhGAgu3vIB2');
+var tokenGenerator = new FirebaseTokenGenerator('NIuNlT8rY9xAsTkmbrx5nlxLj10qpQa7REIuO2ul');
 // var uidTracker = 0;
 
 var guid = function() {
@@ -38,7 +38,7 @@ var tokenFactory = exports.tokenFactory = function(optionsObject){
 
 
 var Firebase = require('firebase');
-var myDataRef = new Firebase('https://bigdicks.firebaseio.com/');
+var myDataRef = new Firebase('https://donkey.firebaseio.com/');
 var freshPost = myDataRef.child('Fresh Post');
 
 myDataRef.authWithCustomToken(tokenFactory(), function(error, authData) {
