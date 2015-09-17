@@ -55,7 +55,19 @@ app.post('/signin', function(request, response){
   var user = request.body;
 
   console.log("logging in user: ", user);
-  auth.login(user);
+  auth.login(user, function authHandler(error, authData) {
+    if (error) {
+      console.log("Login Failed", error);
+      response.send({"loginSuccessful": false});
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+      response.send({"loginSuccessful": true});
+    }
+  });
+})
+
+app.post('/createRoom', function(request, response){
+
 })
 
 app.post('/signup', function(request, response){

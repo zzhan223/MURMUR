@@ -9,7 +9,7 @@ var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
 var InputBox = require('./inputbox');
 var Firebase = require('firebase');
-var Auth = require('./auth');
+var Home = require('./home');
 
 var getCookies = function(){
   var pairs = document.cookie.split(";");
@@ -149,6 +149,5 @@ ReactRouter.run(routes, function (Handler) {
   React.render(<Handler/>, document.querySelector('.container'))
 })
 
-
-// var element = React.createElement(Auth);
+// var element = React.createElement(mainView);
 // React.render(element, document.querySelector('.container'));
