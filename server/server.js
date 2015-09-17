@@ -6,13 +6,14 @@ var bodyParser = require('body-parser');
 var Cookies = require("cookies");
 var serverUrl = '0.0.0.0';
 var fs = require('fs');
+var auth = require('./auth');
 
 app.use('/murmur', express.static('client'));
 app.use(bodyParser.json());
 
 app.use(Cookies.express());
 
-app.post('/')
+app.post('/');
 
 app.get('/noToken', function(request, response){
   fs.readFile('client/src/invite.html', function(err, data){
@@ -44,40 +45,22 @@ app.post('/noToken', function(request, response){
   }
 })
 
-app.get('/signin', function(request, response){
-  fs.readFile('client/src/signin.html', function(err, data){
-    if(err){
-      console.log('error reading signin.html');
-      console.log(process.cwd());
-    }else{
-      response.setHeader('Content-Type', 'text/html');
-      response.send(data);
-    }
-  })
-})
-
-app.get('/signup', function(request, response){
-  fs.readFile('client/src/signup.html', function(err, data){
-    if(err){
-      console.log('error reading signin.html');
-      console.log(process.cwd());
-    }else{
-      response.setHeader('Content-Type', 'text/html');
-      response.send(data);
-    }
-  })
-})
-
 app.get('/', function(request, response){
-  response.redirect('/signin');
+  response.redirect('/murmur');
 })
 
-app.post('/signin', function(request, response){
-  firebase.signin(request, response);
+app.post('/signin', function(request, response){  
+  var user = request.body;
+
+  console.log("logging in user: ", user);
+  auth.login(user);
 })
 
 app.post('/signup', function(request, response){
-  firebase.signup(request, response);
+  var user = request.body;
+
+  console.log("creating user: ", user);
+  auth.createUser(user);
 })
 
 app.get('/user/*', function(request, response){
@@ -91,11 +74,6 @@ app.get('/user/*', function(request, response){
     }
   })
 })
-
-// app.post('/', function(request, response){ //request.body.url = 'newPost'
-//   console.log('got /');
-//   firebase.insertPost(request, response);
-// })
 
 app.post('/murmur/comment', function(request, response){ //request.body.url = 'newPost'
   firebase.comment(request, response);

@@ -3,7 +3,7 @@ var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
 var InputBox = require('./inputbox');
 var Firebase = require('firebase');
-
+var Auth = require('./auth');
 
 var getCookies = function(){
   var pairs = document.cookie.split(";");
@@ -21,7 +21,6 @@ var token = document.token = cookies.token;
 var auth = document.auth = cookies.auth;
 
 var mainView = React.createClass({
-
   messages: [],
   getInitialState: function(){
     return {
@@ -118,6 +117,5 @@ var mainView = React.createClass({
   }
 })
 
-
-var element = React.createElement(mainView);
+var element = React.createElement(Auth);
 React.render(element, document.querySelector('.container'));
