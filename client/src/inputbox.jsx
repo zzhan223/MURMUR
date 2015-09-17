@@ -1,5 +1,5 @@
 var React = require('react');
-var url = 'http://0.0.0.0:3000/';
+// var url = 'http://0.0.0.0:3000/';
 
 var InputBox = React.createClass({
   getInitialState: function() {
@@ -25,7 +25,7 @@ var InputBox = React.createClass({
       event.preventDefault();
       $.ajax({ // Post message
         type: 'POST',
-        url: url,
+        url: '/',
         contentType: 'application/json',
         data: JSON.stringify({ "message": this.state.message }),
         success: function(d){
@@ -42,7 +42,7 @@ var InputBox = React.createClass({
     event.preventDefault();
     $.ajax({ // Post message
       type: 'POST',
-      url: url,
+      url: '/',
       contentType: 'application/json',
       // headers: {'Cookie' : document.cookie },
       data: JSON.stringify({

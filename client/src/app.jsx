@@ -1,9 +1,10 @@
 var React = require('react');
+
 var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
 var InputBox = require('./inputbox');
 var Firebase = require('firebase');
-
+var Auth = require('./auth');
 
 var getCookies = function(){
   var pairs = document.cookie.split(";");
@@ -21,7 +22,6 @@ var token = document.token = cookies.token;
 var auth = document.auth = cookies.auth;
 
 var mainView = React.createClass({
-
   messages: [],
   getInitialState: function(){
     return {
@@ -37,12 +37,14 @@ var mainView = React.createClass({
   componentWillMount: function(){
     if(token){
       var context = this;
-      this.firebaseRef = new Firebase('https://fiery-heat-3376.firebaseio.com/');
+      this.firebaseRef = new Firebase('https://donkey.firebaseio.com/');
       this.firebaseRef.authWithCustomToken(token, function(error, authData){
         if(error){
-          console.log('Problem connecting to Database')
+          console.log('Problem connecting to Database');
+          console.log(error);
         } else{
           console.log('Connected to Databse')
+          console.log(authData);
           context.setState({
             token: authData.token,
             auth: authData.auth,
@@ -116,6 +118,5 @@ var mainView = React.createClass({
   }
 })
 
-
-var element = React.createElement(mainView);
+var element = React.createElement(Auth);
 React.render(element, document.querySelector('.container'));

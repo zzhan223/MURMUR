@@ -2,31 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MurMur Invite Code</title>
+  <title>MurMur Moderator Home</title>
 </head>
 <body>
+  <h1>create room</h1>
   <form action="">
-    <input class="inviteBox" type="text">
+    <input id="roomname" class="authInput" placeholder="your room's name here" type="text">
+    <input id="passcode" class="authInput" placeholder="your room's passcode here" type="text">
     <input class="submitButton" type="submit">
   </form>
-
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>
 
   <script>
-  $(function(){
+   $(function(){
 
     // var url = 'http://0.0.0.0:3000/';
     $('.submitButton').on('click', function(event){
       event.preventDefault();
 
-      var inviteCode = $('.inviteBox').val();
+      var roomname = $('#roomname').val(),
+          passcode = $('#passcode').val();
+
+      console.log(roomname, passcode, owner);
       $.ajax({
         type: 'POST',
-        url: 'noToken' ,
+        url: 'signup' ,
         contentType: 'application/json',
         data: JSON.stringify({
-          "inviteCode": inviteCode,
+          "roomname"  : roomname,
+          "passcode"  : passcode
         }),
         success: function(data, textStatus, jqXHR){
           if(typeof data.redirect == 'string'){
@@ -35,7 +40,8 @@
         }
       })
 
-      $('.inviteBox').val('');
+      $('#roomname').val('');
+      $('#passcode').val('');
     })
   })
   </script>

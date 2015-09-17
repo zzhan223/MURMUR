@@ -2,7 +2,7 @@ var React = require('react');
 var moment = require('moment');
 var Face = require('./face');
 
-var url = 'http://0.0.0.0:3000/';
+// var url = 'http://0.0.0.0:3000/';
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -14,7 +14,7 @@ module.exports = React.createClass({
 
     $.ajax({
       type: 'POST',
-      url: url + 'voteComment' ,
+      url: 'voteComment' ,
       contentType: 'application/json',
       data: JSON.stringify({
         "messageId": this.props.messageId,
@@ -30,7 +30,7 @@ module.exports = React.createClass({
 
     $.ajax({
       type: 'POST',
-      url: url + 'voteComment' ,
+      url: 'voteComment' ,
       contentType: 'application/json',
       data: JSON.stringify({
         "messageId": this.props.messageId,

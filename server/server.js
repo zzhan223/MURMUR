@@ -5,20 +5,25 @@ var app = express();
 var bodyParser = require('body-parser');
 var Cookies = require("cookies");
 var serverUrl = '0.0.0.0';
-var fs = require('fs')
+var fs = require('fs');
+var auth = require('./auth');
 
-app.use('/murmur', express.static('../client'));
+app.use('/murmur', express.static('client'));
 app.use(bodyParser.json());
 
-app.use(Cookies.express())
+app.use(Cookies.express());
+
+app.post('/');
 
 app.get('/noToken', function(request, response){
-  fs.readFile('../client/src/invite.html', function(err, data){
+  fs.readFile('client/src/invite.html', function(err, data){
     if(err){
-      console.log('error reading invite.html')
+      console.log('error reading invite.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
     }
-    response.setHeader('Content-Type', 'text/html')
-    response.send(data)
   })
 })
 
@@ -41,31 +46,48 @@ app.post('/noToken', function(request, response){
 })
 
 app.get('/', function(request, response){
-  if(request.cookies.get('token')){
-    response.redirect('/murmur');
-  } else {
-    console.log('no token redirect')
-    response.redirect('/noToken');
-  }
+  response.redirect('/murmur');
 })
 
-app.post('/', function(request, response){ //request.body.url = 'newPost'
-  firebase.insertPost(request, response);
+app.post('/signin', function(request, response){  
+  var user = request.body;
+
+  console.log("logging in user: ", user);
+  auth.login(user);
 })
 
-app.post('/comment', function(request, response){ //request.body.url = 'newPost'
+app.post('/signup', function(request, response){
+  var user = request.body;
+
+  console.log("creating user: ", user);
+  auth.createUser(user);
+})
+
+app.get('/user/*', function(request, response){
+  fs.readFile('client/src/home.html', function(err,data){
+    if(err){
+      console.log('error reading home.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
+    }
+  })
+})
+
+app.post('/murmur/comment', function(request, response){ //request.body.url = 'newPost'
   firebase.comment(request, response);
 })
 
-app.post('/vote', function(request,response){ //request.body.url = 'newPost'
+app.post('/murmur/vote', function(request,response){ //request.body.url = 'newPost'
   firebase.votePost(request, response);
 })
 
-app.post('/voteComment', function(request,response){ //request.body.url = 'newPost'
+app.post('/murmur/voteComment', function(request,response){ //request.body.url = 'newPost'
   firebase.voteComment(request, response);
 })
 
-app.post('/favorite', function(request,response){ //request.body.url = 'newPost'
+app.post('/murmur/favorite', function(request,response){ //request.body.url = 'newPost'
   firebase.toggleFavorite(request, response);
 })
 

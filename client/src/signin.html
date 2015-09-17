@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MurMur Invite Code</title>
+  <title>MurMur Sign In</title>
 </head>
 <body>
+  <h1>sign in</h1>
   <form action="">
-    <input class="inviteBox" type="text">
+    <input class="username" type="text">
+    <input class="password" type="text">
     <input class="submitButton" type="submit">
+    <input type="button" value="create an account" onclick="window.location.pathname = '/signup';">
   </form>
 
 
@@ -20,13 +23,15 @@
     $('.submitButton').on('click', function(event){
       event.preventDefault();
 
-      var inviteCode = $('.inviteBox').val();
+      var username = $('.username').val(),
+          password = $('.password').val();
       $.ajax({
         type: 'POST',
-        url: 'noToken' ,
+        url: 'signin' ,
         contentType: 'application/json',
         data: JSON.stringify({
-          "inviteCode": inviteCode,
+          "username": username,
+          "password": password
         }),
         success: function(data, textStatus, jqXHR){
           if(typeof data.redirect == 'string'){
@@ -35,7 +40,8 @@
         }
       })
 
-      $('.inviteBox').val('');
+      $('.username').val('');
+      $('.password').val('');
     })
   })
   </script>

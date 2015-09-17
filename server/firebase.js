@@ -1,9 +1,10 @@
 var Firebase = require('firebase');
-var myDataRef = new Firebase('https://fiery-heat-3376.firebaseio.com/');
-var tokenFactory = require('./firebaseTokenFactory').tokenFactory
+var myDataRef = new Firebase('https://donkey.firebaseio.com/');
+var tokenFactory = require('./firebaseTokenFactory').tokenFactory;
 var Cookies = require('cookies');
 
 var freshPost = myDataRef.child('Fresh Post');
+var users = myDataRef.child('users');
 
 var setTokenCookie = exports.setTokenCookie = function (request, response, token){
   var newtoken = tokenFactory();
@@ -45,7 +46,7 @@ var insertPost = exports.insertPost = function(request, response, dataRef){
           comments : "no comments"
         });
         
-        var fbRef = dataRef.parent()
+        var fbRef = dataRef.parent();
         var postIdRef = fbRef.child('sessions/' + authData.auth.uid + '/posted/' + postId);
         
         postIdRef.set({ type: 'true' });
@@ -271,4 +272,13 @@ var toggleFavorite = exports.toggleFavorite = function(request, response, dataRe
       }
     });
   }
+}
+
+var signin = exports.signin = function(request, response){
+
+}
+
+var signup = exports.signup = function(request, response){
+
+
 }
