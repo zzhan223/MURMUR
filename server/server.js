@@ -6,13 +6,14 @@ var bodyParser = require('body-parser');
 var Cookies = require("cookies");
 var serverUrl = '0.0.0.0';
 var fs = require('fs');
+var auth = require('./auth');
 
 app.use('/murmur', express.static('client'));
 app.use(bodyParser.json());
 
 app.use(Cookies.express());
 
-app.post('/')
+app.post('/');
 
 app.get('/noToken', function(request, response){
   fs.readFile('client/src/invite.html', function(err, data){
@@ -45,17 +46,33 @@ app.post('/noToken', function(request, response){
 })
 
 app.get('/', function(request, response){
-  if(request.cookies.get('token')){
-    response.redirect('/murmur');
-  } else {
-    console.log('no token redirect')
-    response.redirect('/noToken');
-  }
+  response.redirect('/murmur');
 })
 
-app.post('/', function(request, response){ //request.body.url = 'newPost'
-  console.log('got /');
-  firebase.insertPost(request, response);
+app.post('/signin', function(request, response){  
+  var user = request.body;
+
+  console.log("logging in user: ", user);
+  auth.login(user);
+})
+
+app.post('/signup', function(request, response){
+  var user = request.body;
+
+  console.log("creating user: ", user);
+  auth.createUser(user);
+})
+
+app.get('/user/*', function(request, response){
+  fs.readFile('client/src/home.html', function(err,data){
+    if(err){
+      console.log('error reading home.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
+    }
+  })
 })
 
 app.post('/murmur/comment', function(request, response){ //request.body.url = 'newPost'
