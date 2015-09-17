@@ -39,7 +39,7 @@ var tokenFactory = exports.tokenFactory = function(optionsObject){
 
 var Firebase = require('firebase');
 var myDataRef = new Firebase('https://donkey.firebaseio.com/');
-var freshPost = myDataRef.child('test2');
+// var freshPost = myDataRef.child('test2');
 
 myDataRef.authWithCustomToken(tokenFactory(), function(error, authData) {
   if (error) {

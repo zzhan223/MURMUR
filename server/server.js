@@ -77,19 +77,19 @@ app.get('/user/*', function(request, response){
   })
 })
 
-app.post('/murmur/comment', function(request, response){ //request.body.url = 'newPost'
+app.post('/comment', function(request, response){ //request.body.url = 'newPost'
   firebase.comment(request, response);
 })
 
-app.post('/murmur/vote', function(request,response){ //request.body.url = 'newPost'
+app.post('/vote', function(request,response){ //request.body.url = 'newPost'
   firebase.votePost(request, response);
 })
 
-app.post('/murmur/voteComment', function(request,response){ //request.body.url = 'newPost'
+app.post('/voteComment', function(request,response){ //request.body.url = 'newPost'
   firebase.voteComment(request, response);
 })
 
-app.post('/murmur/favorite', function(request,response){ //request.body.url = 'newPost'
+app.post('/favorite', function(request,response){ //request.body.url = 'newPost'
   firebase.toggleFavorite(request, response);
 })
 
