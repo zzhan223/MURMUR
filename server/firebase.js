@@ -4,6 +4,7 @@ var tokenFactory = require('./firebaseTokenFactory').tokenFactory;
 var Cookies = require('cookies');
 
 var freshPost = myDataRef.child('Fresh Post');
+var users = myDataRef.child('users');
 
 var setTokenCookie = exports.setTokenCookie = function (request, response, token){
   var newtoken = tokenFactory();
@@ -271,4 +272,13 @@ var toggleFavorite = exports.toggleFavorite = function(request, response, dataRe
       }
     });
   }
+}
+
+var signin = exports.signin = function(request, response){
+
+}
+
+var signup = exports.signup = function(request, response){
+
+
 }
