@@ -5,6 +5,9 @@ var Cookies = require('cookies');
 
 var freshPost = myDataRef.child('Fresh Post');
 
+var notINDB = myDataRef.child('sssss');
+console.log('not in',notINDB, 'fresh',freshPost);
+
 var setTokenCookie = exports.setTokenCookie = function (request, response, token){
   var newtoken = tokenFactory();
   
@@ -21,7 +24,9 @@ var setTokenCookie = exports.setTokenCookie = function (request, response, token
 }
 
 var insertPost = exports.insertPost = function(request, response, dataRef){
-  var dataRef = dataRef || freshPost;
+  // var dataRef = dataRef || freshPost;
+  var room = request.originalUrl.slice(3);
+  var dataRef = myDataRef.child(room);
   var token = request.cookies.get('token') || request.body.token; // body.token is for Slack
   var newToken;
   var newJwtClaims;
@@ -170,6 +175,11 @@ var comment = exports.comment = function(request, response, dataRef){
     }
   });
 }
+
+var createRoom = exports.createRoom = function(request, response, user){
+  var roomname = Math.random().toString(36).replace(/[^a-z,0-9]+/g, '').substr(1, 10);
+  response.redirect('/r/'+roomname); 
+};
 
 var voteComment = exports.voteComment = function(request, response, dataRef){
   var dataRef = dataRef || freshPost;

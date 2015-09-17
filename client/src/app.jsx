@@ -1,4 +1,9 @@
 var React = require('react');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
+var Invite = require('./invite');
 var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
 var InputBox = require('./inputbox');
@@ -118,6 +123,12 @@ var mainView = React.createClass({
   }
 })
 
+React.render(( 
+  <Router>
+    <Route path="/r/:name" component = {mainView}/>
+    <Route path="/noToken" component = {Invite}/>
+  </Router>
+   ), document.querySelector('.container'));
 
-var element = React.createElement(mainView);
-React.render(element, document.querySelector('.container'));
+// var element = React.createElement(mainView);
+// React.render(element, document.querySelector('.container'));
