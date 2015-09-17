@@ -62,6 +62,15 @@ var mainView = React.createClass({
           console.log('Problem connecting to Database');
           console.log(error);
         } else{
+          $.ajax({
+            type: "POST",
+            url: "checkroom",
+            contentType: "application/json",
+            data: JSON.stringify({roomname: this.state.roomname}),
+            success: function(response){
+              console.log('database exist');
+            }
+          });
           console.log('Connected to Databse')
           console.log(authData);
           context.setState({
