@@ -11,6 +11,7 @@ var InputBox = React.createClass({
   handleChange: function(event){
     if(event.target.value.length <= 150) { // Message cannot be longer than 150 characters
       if (event.target.value.keyCode == 13) { // "Enter"
+        console.log('got to handleChange');
         this.handleClick;
       }
 

@@ -1,4 +1,4 @@
-var Firebase = require('firebase');
+  var Firebase = require('firebase');
 var myDataRef = new Firebase('https://donkey.firebaseio.com/');
 
 // register callback to be fired every time auth state changes
