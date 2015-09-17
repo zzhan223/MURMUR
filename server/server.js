@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 
 app.use(Cookies.express());
 
-app.post('/');
+app.post('/', function(request, response){ //request.body.url = 'newPost'
+  firebase.insertPost(request, response);
+});
 
 app.get('/noToken', function(request, response){
   fs.readFile('client/src/invite.html', function(err, data){

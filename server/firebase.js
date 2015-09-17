@@ -3,7 +3,7 @@ var myDataRef = new Firebase('https://donkey.firebaseio.com/');
 var tokenFactory = require('./firebaseTokenFactory').tokenFactory;
 var Cookies = require('cookies');
 
-var freshPost = myDataRef.child('Fresh Post');
+var freshPost = myDataRef.child('test2');
 var users = myDataRef.child('users');
 
 var setTokenCookie = exports.setTokenCookie = function (request, response, token){

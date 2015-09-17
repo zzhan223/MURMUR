@@ -3,6 +3,7 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
+var RouteHandler =  ReactRouter.RouteHandler;
 var DefaultRoute = ReactRouter.DefaultRoute;
 var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
@@ -25,6 +26,17 @@ var cookies = getCookies();
 var token = document.token = cookies.token;
 var auth = document.auth = cookies.auth;
 
+var App = React.createClass({
+  render: function(){
+    return (
+      <div>
+        <TopBar/>
+        <RouteHandler/>
+      </div>
+    );
+  }
+});
+
 var mainView = React.createClass({
   messages: [],
   getInitialState: function(){
@@ -33,12 +45,13 @@ var mainView = React.createClass({
       sort: 'recent',
       token: '',
       auth: '',
-      sessions: '',
+      sessions: ''
     };
   },
 
   // Retrieve the messages data from Firebase
   componentWillMount: function(){
+    console.log('this is token',token);
     if(token){
       var context = this;
       this.firebaseRef = new Firebase('https://donkey.firebaseio.com/');
@@ -55,7 +68,7 @@ var mainView = React.createClass({
           });
         }
       })
-      this.messageRef = this.firebaseRef.child('Fresh Post');
+      this.messageRef = this.firebaseRef.child('test2');
       this.messageRef.on('value', function(dataSnapshot){
         this.messages.push(dataSnapshot.val());
         this.setState({
@@ -94,7 +107,6 @@ var mainView = React.createClass({
   render: function(){
     return (
       <div>
-        <TopBar/>
         <div>
           <div style={this.styles.filter}>
             <div className="btn-group" style={{display: 'inline-block'}}>
@@ -107,7 +119,6 @@ var mainView = React.createClass({
           </div>
           <ViewAllMessages sortBy={ this.state.sort } messages={ this.state.messages } sessions={ this.state.sessions }token={ this.state.token } auth={ this.state.auth }/>
         </div>
-        <RouteHandler/>
       </div>
     )
   },
@@ -126,7 +137,10 @@ var mainView = React.createClass({
 // React.render()
 
 var routes = (
-  React.createElement(DefaultRoute, {name: "index", handler: Auth})
+  React.createElement(Route, {name: 'app', path : '/', handler: App},
+    React.createElement(DefaultRoute, {name: "index", handler: Auth}),
+    React.createElement(Route, {name: "room", path: "r/:roomname", handler: mainView})
+  )
 );
 
 ReactRouter.run(routes, function (Handler) {
