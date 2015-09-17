@@ -43,6 +43,7 @@ var mainView = React.createClass({
     return {
       messages: '',
       sort: 'recent',
+      roomname: this.props.params.roomname,
       token: '',
       auth: '',
       sessions: ''
@@ -51,7 +52,8 @@ var mainView = React.createClass({
 
   // Retrieve the messages data from Firebase
   componentWillMount: function(){
-    console.log('this is token',token);
+    var roomname = this.state.roomname;
+    console.log('ROOM',this.state.roomname)
     if(token){
       var context = this;
       this.firebaseRef = new Firebase('https://donkey.firebaseio.com/');
@@ -68,7 +70,7 @@ var mainView = React.createClass({
           });
         }
       })
-      this.messageRef = this.firebaseRef.child('test2');
+      this.messageRef = this.firebaseRef.child(roomname);
       this.messageRef.on('value', function(dataSnapshot){
         this.messages.push(dataSnapshot.val());
         this.setState({
@@ -115,9 +117,9 @@ var mainView = React.createClass({
               <button className="btn btn-default" style={{fontFamily: 'Roboto'}} onClick={ this.handleFavorites }>Favorites</button>
               <button className="btn btn-default" style={{fontFamily: 'Roboto'}} onClick={ this.handleMyPosts }>My Posts</button>
             </div>
-            <InputBox token={ this.state.token } auth={ this.state.auth }/>
+            <InputBox token={ this.state.token } auth={ this.state.auth } roomname={ this.state.roomname }/>
           </div>
-          <ViewAllMessages sortBy={ this.state.sort } messages={ this.state.messages } sessions={ this.state.sessions }token={ this.state.token } auth={ this.state.auth }/>
+          <ViewAllMessages sortBy={ this.state.sort } messages={ this.state.messages } sessions={ this.state.sessions }token={ this.state.token } auth={ this.state.auth } roomname={this.state.roomname}/>
         </div>
       </div>
     )
