@@ -281,6 +281,20 @@ var toggleFavorite = exports.toggleFavorite = function(request, response, dataRe
   }
 }
 
+var checkroom = exports.checkroom = function(request, response, callback) {
+  var dataRef = myDataRef.child(request.body.roomname);
+  dataRef.once('value', function(dataSnapshot) {
+    console.log(dataSnapshot);
+    if (dataSnapshot === null) {
+      callback(false);
+    } else {
+      callback(true);
+    }
+  
+  // handle read data.
+  });
+}
+
 var signin = exports.signin = function(request, response){
 
 }

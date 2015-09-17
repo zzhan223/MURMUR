@@ -29,6 +29,13 @@ app.get('/noToken', function(request, response){
   })
 })
 
+app.post('/checkroom', function(request, response) {
+  firebase.checkroom(request, response, function(res) {
+    console.log('this is res', res);
+    response.send(true);
+  })
+})
+
 app.post('/noToken', function(request, response){
   if(request.cookies.get('token')){
     console.log('already have a token')
