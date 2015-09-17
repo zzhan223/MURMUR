@@ -44,19 +44,58 @@ app.post('/noToken', function(request, response){
   }
 })
 
-app.get('/', function(request, response){
-  if(request.cookies.get('token')){
-    response.redirect('/murmur');
-  } else {
-    console.log('no token redirect')
-    response.redirect('/noToken');
-  }
+app.get('/signin', function(request, response){
+  fs.readFile('client/src/signin.html', function(err, data){
+    if(err){
+      console.log('error reading signin.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
+    }
+  })
 })
 
-app.post('/', function(request, response){ //request.body.url = 'newPost'
-  console.log('got /');
-  firebase.insertPost(request, response);
+app.get('/signup', function(request, response){
+  fs.readFile('client/src/signup.html', function(err, data){
+    if(err){
+      console.log('error reading signin.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
+    }
+  })
 })
+
+app.get('/', function(request, response){
+  response.redirect('/signin');
+})
+
+app.post('/signin', function(request, response){
+  firebase.signin(request, response);
+})
+
+app.post('/signup', function(request, response){
+  firebase.signup(request, response);
+})
+
+app.get('/user/*', function(request, response){
+  fs.readFile('client/src/home.html', function(err,data){
+    if(err){
+      console.log('error reading home.html');
+      console.log(process.cwd());
+    }else{
+      response.setHeader('Content-Type', 'text/html');
+      response.send(data);
+    }
+  })
+})
+
+// app.post('/', function(request, response){ //request.body.url = 'newPost'
+//   console.log('got /');
+//   firebase.insertPost(request, response);
+// })
 
 app.post('/murmur/comment', function(request, response){ //request.body.url = 'newPost'
   firebase.comment(request, response);
