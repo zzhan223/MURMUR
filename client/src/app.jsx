@@ -1,5 +1,9 @@
 var React = require('react');
-
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
+var DefaultRoute = ReactRouter.DefaultRoute;
 var ViewAllMessages = require('./viewAllMessages');
 var TopBar = require('./topbar');
 var InputBox = require('./inputbox');
@@ -103,6 +107,7 @@ var mainView = React.createClass({
           </div>
           <ViewAllMessages sortBy={ this.state.sort } messages={ this.state.messages } sessions={ this.state.sessions }token={ this.state.token } auth={ this.state.auth }/>
         </div>
+        <RouteHandler/>
       </div>
     )
   },
@@ -118,5 +123,16 @@ var mainView = React.createClass({
   }
 })
 
-var element = React.createElement(Auth);
-React.render(element, document.querySelector('.container'));
+// React.render()
+
+var routes = (
+  React.createElement(DefaultRoute, {name: "index", handler: Auth})
+);
+
+ReactRouter.run(routes, function (Handler) {
+  React.render(<Handler/>, document.querySelector('.container'))
+})
+
+
+// var element = React.createElement(Auth);
+// React.render(element, document.querySelector('.container'));
