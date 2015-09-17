@@ -30,9 +30,9 @@ app.get('/noToken', function(request, response){
 })
 
 app.post('/checkroom', function(request, response) {
-  firebase.checkroom(request, response, function(res) {
-    console.log('this is res', res);
-    response.send(true);
+  firebase.checkroom(request, response, function(exists) {
+    console.log('page exists: ', exists);
+    response.send(exists);
   })
 })
 
