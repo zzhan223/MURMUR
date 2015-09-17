@@ -8,7 +8,7 @@ var serverUrl = '0.0.0.0';
 var fs = require('fs');
 var auth = require('./auth');
 
-app.use('/murmur', express.static('client'));
+app.use('/', express.static('client'));
 app.use(bodyParser.json());
 
 app.use(Cookies.express());
