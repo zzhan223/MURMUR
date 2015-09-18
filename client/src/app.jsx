@@ -66,16 +66,21 @@ var mainView = React.createClass({
             type: "POST",
             url: "checkroom",
             contentType: "application/json",
-            data: JSON.stringify({roomname: this.state.roomname}),
+            data: JSON.stringify({roomname: roomname}),
             success: function(response){
-              console.log('database exist');
+              console.log(response);
+              if (response) {
+                console.log('Connected to Database')
+                console.log(authData);
+                context.setState({
+                  token: authData.token,
+                  auth: authData.auth,
+                });
+              } else {
+                console.log('room does not exists')
+              }
+              
             }
-          });
-          console.log('Connected to Databse')
-          console.log(authData);
-          context.setState({
-            token: authData.token,
-            auth: authData.auth,
           });
         }
       })
@@ -149,7 +154,7 @@ var mainView = React.createClass({
 
 var routes = (
   React.createElement(Route, {name: 'app', path : '/', handler: App},
-    React.createElement(DefaultRoute, {name: "index", handler: Auth}),
+    React.createElement(DefaultRoute, {name: "index", handler: Home}),
     React.createElement(Route, {name: "room", path: "r/:roomname", handler: mainView})
   )
 );
