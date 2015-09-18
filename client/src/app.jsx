@@ -38,6 +38,7 @@ var App = React.createClass({
 });
 
 var mainView = React.createClass({
+  mixins: [ReactRouter.Navigation],
   messages: [],
   getInitialState: function(){
     return {
@@ -52,6 +53,7 @@ var mainView = React.createClass({
 
   // Retrieve the messages data from Firebase
   componentWillMount: function(){
+    var self = this;
     var roomname = this.state.roomname;
     console.log('ROOM',this.state.roomname)
     if(token){
@@ -77,7 +79,10 @@ var mainView = React.createClass({
                   auth: authData.auth,
                 });
               } else {
-                console.log('room does not exists')
+                console.log('room does not exists');
+                // console.log(Router);
+                self.transitionTo('index');
+                console.log(self);
               }
               
             }
